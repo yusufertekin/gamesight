@@ -1,0 +1,23 @@
+<html lang="en">
+  {% load static %}
+	<head>
+		<meta charset="utf-8" />
+    <title>{% block title %}{% endblock %}</title>
+		<meta name="description" content="User login">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link href="{% static "vendors/bootstrap/bootstrap.css" %}" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="{% static "base/media/logos/ifa-logo-small.png" %}" />
+    {% block extrastyle %}
+    {% endblock %}
+    <script src="{% static "vendors/jquery/jquery.js" %}"></script>
+    {% block extrahead %}
+    {% endblock %}
+	</head>
+	<body>
+    <div class="content" style="margin: 170px;">
+      {% block content %}{% endblock %}
+    <script src="{% static "vendors/jquery/jquery.js" %}"></script>
+    <script src="{% static "vendors/bootstrap/bootstrap.js" %}"></script>
+	</body>
+</html>

@@ -1,0 +1,45 @@
+{% extends "unauthorized_base.html" %}
+{% load static %}
+{% block title %}Login{% endblock %}
+{% block content %}
+{% if error_message %}
+<div class="alert alert-danger fade show" style="display: flex; flex-direction: row;" role="alert">
+    <div class="alert-icon" style="margin: 6px;"><i class="flaticon-questions-circular-button"></i></div>
+    <div class="alert-text">{{ error_message }}</div>
+    <div class="alert-close" style="margin-left: auto;">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true"><i class="la la-close"></i></span>
+      </button>
+    </div>
+</div>
+{% endif %}
+{% if next %}
+    {% if user.is_authenticated %}
+    <div class="alert alert-danger" role="alert">
+      <div class="alert-text">Your account doesn't have access to this page. To proceed, please login with an account that has access.</div>
+    </div>
+    {% elif next != '/' %}
+    <div class="alert alert-warning" role="alert">
+      <div class="alert-text">Please login to see this page.</div>
+    </div>
+    {% endif %}
+{% endif %}
+<div style="display: flex; flex-direction: column;">
+  <h3 style="color: white;">Sign to Account</h3>
+  <!--begin::Form-->
+  <form method="post" action="{% url 'accounts:login' %}">
+    {% csrf_token %}
+    <div class="form-group" style="width: 50%">
+      <input class="form-control" type="email" placeholder="E-mail" name="email" autofocus>
+    </div>
+    <div class="form-group" style="width: 50%">
+      <input class="form-control" type="password" placeholder="Password" name="password">
+    </div>
+    <input class="btn-primary" style="background-color: #f59e38;" type="submit" value="Login">
+    <div style="padding-top: 10px;" class="form-group">
+      <p><a style="color: white; margin: 5px;" href="{% url 'password_reset' %}">Lost password?</a></p>
+    </div>
+    <input type="hidden" name="next" value="{{ next }}">
+  </form>
+</div>
+{% endblock %}
