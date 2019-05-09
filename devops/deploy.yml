@@ -36,20 +36,37 @@
         - "{{ project_home }}/requirements/base.txt"
         - "{{ project_home }}/requirements/production.txt"
 
+    - name: Copy over .env file
+      copy:
+        src: "gamesight.env"
+        dest: "{{ project_home }}"
+
+    - name: Stop Nginx
+      become: yes
+      systemd:
+        state: stopped
+        name: nginx
+
+    - name: Stop Gunicorn
+      become: yes
+      systemd:
+        state: stopped
+        name: gunicorn
+
     - name: Run migrations
       command: "{{ app_venv_python_bin }} {{ project_home }}/manage.py migrate"
 
     - name: Collect statics
-      command: "{{ app_venv_python_bin }} {{ project_home }}/manage.py collectstatic"
+      command: "{{ app_venv_python_bin }} {{ project_home }}/manage.py collectstatic --no-input"
 
-    - name: Restart Nginx
+    - name: Start Nginx
       become: yes
       systemd:
-        state: restarted
+        state: started
         name: nginx
 
-    - name: Restart Gunicorn
+    - name: Start Gunicorn
       become: yes
       systemd:
-        state: restarted
+        state: started
         name: gunicorn
