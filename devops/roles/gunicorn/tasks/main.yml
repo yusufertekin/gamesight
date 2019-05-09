@@ -1,0 +1,31 @@
+- name: Gunicorn | Create log directory
+  become: yes
+  file:
+    state: directory
+    owner: "{{ project_name }}"
+    group: staff
+    recurse: yes
+    path: "{{ gunicorn_logfile_path }}"
+
+- name: Gunicorn | Template out systemd service file
+  become: yes
+  template:
+    src: gunicorn.service.j2
+    dest: /etc/systemd/system/gunicorn.service
+    mode: 0755
+
+- name: Gunicorn | Make sure log directory ownership
+  become: yes
+  file:
+    state: directory
+    owner: "{{ project_name }}"
+    group: staff
+    recurse: yes
+    path: "{{ gunicorn_logfile_path }}"
+
+- name: Gunicorn | Enable
+  become: yes
+  systemd:
+    enabled: yes
+    name: gunicorn
+    masked: no

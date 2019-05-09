@@ -1,3 +1,10 @@
 package-lock.json
 **/__pycache__
 db.sqlite3
+node_modules
+*.swp
+*.retry
+devops/.vagrant/
+devops/.installed_roles/
+
+

@@ -1,6 +1,8 @@
-from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
+from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.utils.translation import gettext_lazy as _
 
 from gamesight.apps.accounts.managers import EmailUserManager
@@ -40,8 +42,14 @@ class EmailUser(AbstractBaseUser, PermissionsMixin):
         return self.email
 
 
+@receiver(post_save, sender=EmailUser)
+def create_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance, credit=0)
+
+
 class Profile(models.Model):
-    user = models.OneToOneField(EmailUser, on_delete=models.CASCADE)
+    user = models.OneToOneField(EmailUser, on_delete=models.CASCADE, related_name='profile')
     credit = models.DecimalField(max_digits=7, decimal_places=2)
 
     def create_subscription(self, subscription_plan):

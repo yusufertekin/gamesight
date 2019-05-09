@@ -1,0 +1,54 @@
+- name: Nginx | Install
+  yum:
+    name: nginx
+    state: present
+
+- name: Nginx | Create sites-available dir
+  file:
+    state: directory
+    path: /etc/nginx/sites-available
+
+- name: Nginx | Create sites-enabled dir
+  file:
+    state: directory
+    path: /etc/nginx/sites-enabled
+
+- name: Check if including sites-enabled
+  shell: "cat /etc/nginx/nginx.conf | grep 'sites-enabled' | wc -l"
+  register: check_se
+
+- name: Nginx | Include sites-enabled conf files
+  lineinfile:
+    path: /etc/nginx/nginx.conf
+    regexp: "^include /etc/nginx/conf.d/*.conf"
+    insertbefore: "}$"
+    line: "include /etc/nginx/sites-enabled/*.conf;" 
+  when: check_se.stdout == "0"
+
+- name: Nginx | Create proxy_params
+  copy:
+    src: proxy_params
+    dest: /etc/nginx/proxy_params
+
+- name: Nginx | Template out nginx configuration
+  template:
+    src: nginx.conf.j2
+    dest: "/etc/nginx/sites-available/{{ project_name }}.conf"
+
+- name: Nginx | Enable sites
+  file:
+    state: link
+    src: "/etc/nginx/sites-available/{{ project_name }}.conf"
+    dest: "/etc/nginx/sites-enabled/{{ project_name }}.conf"
+
+- name: Nginx | Restart service
+  systemd:
+    state: restarted
+    daemon_reload: yes
+    name: nginx
+
+- name: Nginx | Enable service
+  systemd:
+    enabled: yes
+    masked: no
+    name: nginx

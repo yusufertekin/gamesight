@@ -13,15 +13,23 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings
 from django.contrib import admin
 from django.conf.urls import include, url
 from django.views.generic import TemplateView
 
-from gamesight.apps.accounts.views import LoginRegisterView
+from gamesight.apps.accounts.views import LoginView
 
 urlpatterns = [
-    url(r'^/', LoginRegisterView.as_view(), name='login-register'),
-    url(r'^app/', TemplateView.as_view(template_name='base.html'), name='app-home'),
+    url(r'^$', LoginView.as_view(), name='login'),
+    url(r'^app/', TemplateView.as_view(template_name='base.html'), name='site-home'),
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/', include('gamesight.apps.accounts.urls', namespace='accounts')),
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        url('r^__debug__/', include(debug_toolbar.urls)),
+
+    ] + urlpatterns

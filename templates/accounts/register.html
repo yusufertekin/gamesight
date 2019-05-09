@@ -1,0 +1,52 @@
+{% extends "unauthorized_base.html" %}
+{% load static %}
+{% block title %}Register{% endblock %}
+{% block content %}
+{% if error_message %}
+<div class="alert alert-danger fade show" style="display: flex; flex-direction: row;" role="alert">
+  <div class="alert-text">{{ error_message }}</div>
+</div>
+{% endif %}
+<div style="display: flex; flex-direction: column;">
+  <h3 style="color: black;">Register</h3>
+  <form method="post" action="{% url 'accounts:register' %}">
+    {% csrf_token %}
+    <div class="form-group" style="width: 50%">
+      <input class="form-control" type="email" placeholder="E-mail" name="email" autofocus>
+    </div>
+    <div class="form-group" style="width: 50%">
+      <input class="form-control" type="text" placeholder="Organization Name" name="organization_name">
+    </div>
+    <div class="form-group" style="width: 50%">
+      <input class="form-control" type="password" placeholder="Password" name="password">
+    </div>
+    <div class="form-group" style="width: 50%">
+      <input class="form-control" type="password" placeholder="Retype Password" name="password2">
+    </div>
+    <input type="hidden" name="next" value="{{ next }}">
+    <div style="display: flex; flex-direction: row;">
+      <div class="card mb-3" style="margin-right: 10px; min-width: 20rem;">
+        <div class="card-body">
+          <h5 class="card-title">{{ free_subscription_plan.name }}</h5>
+          <p class="card-text">{{ free_subscription_plan.description }}</p>
+          <p class="card-text">Num of project allowence {{ free_subscription_plan.num_project_allowence }}</p>
+          <p class="card-text">Num of saved report allowence {{ free_subscription_plan.num_saved_report_allowence }}</p>
+        </div>
+        <div class="card-footer bg-transparent">Price {{ free_subscription_plan.price }}</div>
+      </div>
+      {% for subscription_plan in paid_subscription_plans %}
+      <div class="card mb-3" style="margin-right: 10px; min-width: 20rem;">
+        <div class="card-body">
+          <h5 class="card-title">{{ subscription_plan.name }}</h5>
+          <p class="card-text">{{ subscription_plan.description }}</p>
+          <p class="card-text">Num of project allowence {{ subscription_plan.num_project_allowence }}</p>
+          <p class="card-text">Num of saved report allowence {{ subscription_plan.num_saved_report_allowence }}</p>
+        </div>
+        <div class="card-footer bg-transparent">Price {{ subscription_plan.price }}</div>
+      </div>
+      {% endfor %}
+    </div>
+    <input class="btn-primary" style="background-color: #f59e38;" type="submit" value="Register">
+  </form>
+</div>
+{% endblock %}

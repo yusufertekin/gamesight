@@ -7,16 +7,17 @@ var reload = browserSync.reload;
 
 // Run the Django development server
 gulp.task('run-django-server', function(cb) {
-    spawn('python', ['manage.py', 'runserver'], { stdio: 'inherit' });
+    spawn('python', ['manage.py', 'runserver', '0:8000', '--settings=gamesight.settings.local'], { stdio: 'inherit' });
     cb();
 });
 
 
 gulp.task('copy', function(cb) {
-  gulp.src(['node_modules/jquery/dist/jquery.js'])
-    .pipe(gulp.dest('ifa_standards_rms/static/vendors/jquery'))
-  gulp.src(['node_modules/bootstrap/dist/css/bootstrap.css', 'node_modules/bootstrap/dist/js/bootstrap.js'])
-    .pipe(gulp.dest('ifa_standards_rms/static/vendors/bootstrap'))
+  gulp.src(['node_modules/jquery/dist/jquery.min.js', 'node_modules/jquery/dist/jquery.min.map'])
+    .pipe(gulp.dest('static/vendors/jquery'))
+  gulp.src(['node_modules/bootstrap/dist/css/bootstrap.min.css', 'node_modules/bootstrap/dist/css/bootstrap.min.css.map',
+    'node_modules/bootstrap/dist/js/bootstrap.min.js', 'node_modules/bootstrap/dist/js/bootstrap.min.js.map'])
+    .pipe(gulp.dest('static/vendors/bootstrap'))
   cb();
 });
 

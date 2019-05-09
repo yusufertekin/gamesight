@@ -1,0 +1,55 @@
+- hosts: "~(gamesight_{{ app_env }}_app*)"
+  vars:
+    - ansible_user: "{{ project_name }}"
+    - ansible_private_key_file: ~/.ssh/id_rsa
+  tasks:
+    - name: Ensure .ssh directory exists.
+      file:
+        path: "{{ base_dir }}/.ssh"
+        state: directory
+        mode: 0700
+        owner: "{{ project_name }}"
+        group: staff
+
+    - name: Ensure GitHub deploy key is present on the server.
+      copy:
+        src: "{{ deploy_private_key }}"
+        dest: "{{ base_dir }}/.ssh/deploy_key"
+        mode: 0600
+        owner: "{{ project_name }}"
+        group: staff
+
+    - name: Clone the code repository to the docroot.
+      git:
+        repo: "{{ git_repo }}"
+        dest: "{{ project_home }}"
+        accept_hostkey: yes
+        key_file: "{{ base_dir }}/.ssh/deploy_key"
+      become_user: "{{ project_name }}"
+
+    - name: Install python requirements
+      pip:
+        requirements: "{{ item }}" 
+        virtualenv: "{{ app_venv_home }}"
+        virtualenv_python: "/usr/bin/python3"
+      with_items:
+        - "{{ project_home }}/requirements/base.txt"
+        - "{{ project_home }}/requirements/production.txt"
+
+    - name: Run migrations
+      command: "{{ app_venv_python_bin }} {{ project_home }}/manage.py migrate"
+
+    - name: Collect statics
+      command: "{{ app_venv_python_bin }} {{ project_home }}/manage.py collectstatic"
+
+    - name: Restart Nginx
+      become: yes
+      systemd:
+        state: restarted
+        name: nginx
+
+    - name: Restart Gunicorn
+      become: yes
+      systemd:
+        state: restarted
+        name: gunicorn

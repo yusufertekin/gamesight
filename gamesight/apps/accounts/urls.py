@@ -1,10 +1,11 @@
 from django.conf.urls import url
 
-from gamesight.apps.accounts.views import SelectSubscriptionView
+from gamesight.apps.accounts.views import RegisterView, logout_user
 
 
 app_name = 'accounts'
 
 urlpatterns = [
-    url(r'^select-subscription', SelectSubscriptionView.as_view(), name='select-subscription'),
+    url(r'^register', RegisterView.as_view(), name='register'),
+    url(r'^logout', logout_user, name='logout'),
 ]

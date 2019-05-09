@@ -1,0 +1,31 @@
+- hosts: localhost
+  tasks:
+    - name: Cleanup
+      shell: "{{ item }}"
+      with_items:
+        - "rm -rf IFA.egg-info"
+        - "rm -rf dist"
+        - "rm -rf wheelhouse"
+      ignore_errors: yes
+      args:
+        chdir: ../../
+
+    - name: Install dependencies
+      command: npm install
+      args:
+        chdir: ../../
+
+    - name: Copy static vendor files
+      command: gulp copy
+      args:
+        chdir: ../../
+
+    - name: Collect statics
+      command: python manage.py collectstatic --noinput
+      args:
+        chdir: ../../
+
+    - name: Packaging
+      command: "python setup.py package"
+      args:
+        chdir: ../../

@@ -1,0 +1,36 @@
+---
+
+project_name: gamesight
+base_dir: /var/www
+project_home: "{{ base_dir }}/{{ project_name }}"
+project_previous_home: "{{ base_dir }}/{{ project_name}}_previous"
+deploy_private_key: ~/.ssh/id_rsa
+git_repo: git@github.com:yusufertekin/gamesight.git
+
+venv_home_path: "/home/{{ project_name }}/.virtualenvs"
+app_venv_name: "{{ project_name }}"
+app_venv_home: "{{ venv_home_path }}/{{ app_venv_name }}"
+app_venv_python_bin: "{{ app_venv_home }}/bin/python"
+
+staff_ssh_users:
+  - name: "{{ project_name }}"
+    ssh_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDUACD+N+TfcXbsWToqD/bQ5cBE+PeeEjQI9F0NotG08GybXJSDyqjbzA4qXO+70OmSDxg/LqniSIMYB31idNbQaqEhSBF87EMM0/hHTc2mYU79fFn1FwgZOxtAstZogTjpw4RTefnObj0qCYC5ejqfubu2d9OKsGKq9GtGh0xgCYlxQ0lp0AO62m2L90Wh56qa74pJem1OxPlInyhmW9QRnT4ecSH1X3lJL/zpAl7GAS/3lBaFC2DB5nhJkW7vcOp0raVLiScZD04/habU89W55myB/hU5HLRBROzwc112bkIIDTJkMdLISQxjzIa9sq0VFlpM/Klr70YOFIu/Gkgn yusufertekin@mehmets-mbp.lan"
+    state: present
+
+# TODO: Secure passwords with ansible-vault
+postgresql_python_library: python-psycopg2
+postgresql_databases:
+  - name: "{{ project_name }}"
+postgresql_users:
+  - name: "{{ project_name }}"
+    password: password
+
+gunicorn_sock: unix:/tmp/gunicorn.sock 
+gunicorn_logfile_path: /var/log/gunicorn
+gunicorn_access_logfile: "{{ gunicorn_logfile_path }}/access.log"
+gunicorn_error_logfile: "{{ gunicorn_logfile_path }}/error.log" 
+gunicorn_log_level: debug
+
+nginx_server_name: "{{ project_name }}"
+nginx_static_file_path: "{{ project_home }}/staticfiles/" 
+nginx_proxy_pass: "http://{{ gunicorn_sock }}" 

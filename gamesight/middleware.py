@@ -12,6 +12,7 @@ class LoginRequiredMiddleware:
 
     def __call__(self, request):
         if not request.user.is_authenticated \
+        and not request.path_info.startswith('/static/') \
         and not request.path_info in self.open_urls:
             return redirect(self.login_url+'?next='+request.path)
 

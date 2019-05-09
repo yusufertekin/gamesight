@@ -4,20 +4,21 @@
 		<meta charset="utf-8" />
     <title>{% block title %}{% endblock %}</title>
 		<meta name="description" content="User login">
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <link href="{% static "vendors/bootstrap/bootstrap.css" %}" rel="stylesheet" type="text/css">
-    <link rel="shortcut icon" href="{% static "base/media/logos/ifa-logo-small.png" %}" />
+    <link href="{% static "vendors/bootstrap/bootstrap.min.css" %}" rel="stylesheet" type="text/css">
+    <link href="{% static "base/base.css" %}" rel="stylesheet" type="text/css">
     {% block extrastyle %}
     {% endblock %}
-    <script src="{% static "vendors/jquery/jquery.js" %}"></script>
     {% block extrahead %}
     {% endblock %}
 	</head>
 	<body>
-    <div class="content" style="margin: 170px;">
+    <div id="unauthorized-content" class="container">
       {% block content %}{% endblock %}
-    <script src="{% static "vendors/jquery/jquery.js" %}"></script>
-    <script src="{% static "vendors/bootstrap/bootstrap.js" %}"></script>
+    </div>
+    <script src="{% static "vendors/jquery/jquery.min.js" %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="{% static "vendors/bootstrap/bootstrap.min.js" %}"></script>
 	</body>
 </html>

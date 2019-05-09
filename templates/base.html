@@ -1,21 +1,27 @@
 {% load i18n static %}<!DOCTYPE html>
 <head>
 <title>{% block title %}Game Sight{% endblock %}</title>
-<link href="{% static "vendors/bootstrap/bootstrap.css" %}" rel="stylesheet" type="text/css">
+<link href="{% static "vendors/bootstrap/bootstrap.min.css" %}" rel="stylesheet" type="text/css">
+<link href="{% static "base/base.css" %}" rel="stylesheet" type="text/css">
 <meta name="robots" content="NONE,NOARCHIVE">
-<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<script src="{% static "vendors/jquery/jquery.js" %}"></script>
-<script src="{% static "vendors/bootstrap/bootstrap.js" %}"></script>
 {% block extrastyle %}{% endblock %}
 {% block extrahead %}{% endblock %}
 </head>
 <body>
   <div id="app">
-    <div class="gamesight-main-content">
-      User: {{ request.user }} Credit: {{ request.user.profile.credit }}
+    <div id="content">
+      User: {{ request.user }} 
+      <br/>
+      Credit: {{ request.user.profile.credit }}
+      <br/>
+      <a href="{% url "accounts:logout" %}">Log out</a>
       {% block content %}{% endblock %}
     </div>
   </div>
+  <script src="{% static "vendors/jquery/jquery.min.js" %}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="{% static "vendors/bootstrap/bootstrap.min.js" %}"></script>
 </body>
 </html>
