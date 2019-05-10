@@ -1,7 +1,6 @@
 ---
 
 - name: Update and upgrade apt packages
-  become: true
   apt:
     upgrade: yes
     update_cache: yes
@@ -9,14 +8,19 @@
 
 - name: Install apt packages 
   apt:
-    name: ['python3-pip', 'python-setuptools', 'redis-server']
+    name: ['python3-pip', 'python-setuptools']
     state: present
 
-- name: Make sure a service is running
-  systemd:
-    state: started
-    name: redis
-
+    #- name: Make sure a service is running
+    #  systemd:
+    #    state: enabled
+    #    name: redis
+    #
+    #- name: Make sure a service is running
+    #  systemd:
+    #    state: started
+    #    name: redis
+    #
 - name: Install virtualenv
   pip: 
     name: virtualenv

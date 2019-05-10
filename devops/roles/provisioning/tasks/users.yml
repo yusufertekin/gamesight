@@ -2,7 +2,7 @@
 
 - name: Make staff group for our staff users
   group:
-    name: staff
+    name: "{{ deploy_group }}"
     state: present
 
 - name: Add staff users
