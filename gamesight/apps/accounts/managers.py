@@ -8,7 +8,6 @@ class EmailUserManager(BaseUserManager):
     def create_user(self, email, password, name, **kwargs):
         email = self.normalize_email(email)
         user = self.model(email=email,
-                          name=name,
                           **kwargs)
         user.set_password(password)
         user.save()
@@ -18,4 +17,4 @@ class EmailUserManager(BaseUserManager):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
         extra_fields.setdefault('is_active', True)
-        return self.create_user(email, password, organization_name='gamesight', **extra_fields)
+        return self.create_user(email, password, name='gamesight', **extra_fields)

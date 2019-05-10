@@ -16,3 +16,9 @@
     line: "{{ item }}"
   with_items:
     - "DJANGO_SETTINGS_MODULE={{ django_settings_module }}"
+
+- name: Enable ipv6
+  lineinfile: 
+    dest: /etc/sysctl.conf
+    state: absent
+    regexp: 'net.ipv6.conf.all.disable_ipv6 = 1'
