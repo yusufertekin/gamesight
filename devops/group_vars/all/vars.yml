@@ -1,5 +1,7 @@
 ---
 
+deploy_user: "{{ project_name }}"
+deploy_group: staff
 project_name: gamesight
 base_dir: /var/www
 project_home: "{{ base_dir }}/{{ project_name }}"

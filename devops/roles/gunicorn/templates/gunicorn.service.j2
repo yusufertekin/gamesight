@@ -7,7 +7,7 @@ User={{ project_name }}
 Group=staff
 WorkingDirectory={{ project_home }}
 ExecStart={{ app_venv_home }}/bin/gunicorn {{ project_name }}.wsgi:application --bind {{ gunicorn_sock }} --access-logfile {{ gunicorn_access_logfile }} --error-logfile {{ gunicorn_error_logfile }} --log-level {{ gunicorn_log_level }}
-EnvironmentFile={{ project_home }}/{{ project_name }}.env
+EnvironmentFile={{ project_home }}/app.env
 
 [Install]
 WantedBy=multi-user.target

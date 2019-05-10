@@ -83,9 +83,9 @@ WSGI_APPLICATION = 'gamesight.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'django_db',
-        'USER': 'db_user',
-        'PASSWORD': 'db_pass',
+        'NAME': 'gamesight',
+        'USER': 'gamesight',
+        'PASSWORD': 'password',
         'HOST': 'localhost',
         'PORT': '',
     }

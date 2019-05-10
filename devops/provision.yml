@@ -1,15 +1,15 @@
-- hosts: "~(gamesight_{{ app_env }}_app*)"
+- hosts: "~({{ app_env }}_app*)"
   become: yes
   roles:
     - role: provisioning
     - role: gunicorn
 
-- hosts: "~(gamesight_{{ app_env }}_db*)"
+- hosts: "~({{ app_env }}_db*)"
   become: yes
   roles:
     - role: geerlingguy.postgresql
 
-- hosts: "~(gamesight_{{ app_env }}_front*)"
+- hosts: "~({{ app_env }}_front*)"
   become: yes
   roles:
     - role: nginx

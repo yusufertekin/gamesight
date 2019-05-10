@@ -1,23 +1,27 @@
-- hosts: "~(gamesight_{{ app_env }}_app*)"
+- hosts: "~({{ app_env }}_app*)"
   vars:
-    - ansible_user: "{{ project_name }}"
+    - ansible_user: "{{ deploy_user }}"
     - ansible_private_key_file: ~/.ssh/id_rsa
+  pre_tasks:
+    - name: Loading environment variables
+      set_fact:
+        DJANGO_SETTINGS_MODULE: '{{ django_settings_module }}'
   tasks:
     - name: Ensure .ssh directory exists.
       file:
         path: "{{ base_dir }}/.ssh"
         state: directory
         mode: 0700
-        owner: "{{ project_name }}"
-        group: staff
+        owner: "{{ deploy_user }}"
+        group: "{{ deploy_group }}"
 
     - name: Ensure GitHub deploy key is present on the server.
       copy:
         src: "{{ deploy_private_key }}"
         dest: "{{ base_dir }}/.ssh/deploy_key"
         mode: 0600
-        owner: "{{ project_name }}"
-        group: staff
+        owner: "{{ deploy_user }}"
+        group: "{{ deploy_group }}"
 
     - name: Clone the code repository to the docroot.
       git:
@@ -25,21 +29,34 @@
         dest: "{{ project_home }}"
         accept_hostkey: yes
         key_file: "{{ base_dir }}/.ssh/deploy_key"
-      become_user: "{{ project_name }}"
+      become_user: "{{ deploy_user }}"
 
-    - name: Install python requirements
+    - name: Install base python requirements
       pip:
-        requirements: "{{ item }}" 
+        requirements: "{{ project_home }}/requirements/base.txt" 
         virtualenv: "{{ app_venv_home }}"
         virtualenv_python: "/usr/bin/python3"
-      with_items:
-        - "{{ project_home }}/requirements/base.txt"
-        - "{{ project_home }}/requirements/production.txt"
 
-    - name: Copy over .env file
-      copy:
-        src: "gamesight.env"
-        dest: "{{ project_home }}"
+    - name: Install env python requirements
+      pip:
+        requirements: "{{ project_home }}/requirements/dev.txt" 
+        virtualenv: "{{ app_venv_home }}"
+        virtualenv_python: "/usr/bin/python3"
+      when: "'vagrant' in group_names"
+
+    - name: Install env python requirements
+      pip:
+        requirements: "{{ project_home }}/requirements/production.txt" 
+        virtualenv: "{{ app_venv_home }}"
+        virtualenv_python: "/usr/bin/python3"
+      when: "'amazon' in group_names"
+
+    - name: Copy over app.env file
+      template:
+        src: "app.env.j2"
+        dest: "{{ project_home }}/app.env"
+        owner: "{{ deploy_user }}"
+        group: "{{ deploy_group }}"
 
     - name: Stop Nginx
       become: yes

@@ -21,5 +21,5 @@
   file:
     state: directory
     path: "{{ venv_home_path }}"
-    owner: "{{ project_name }}"
-    group: staff
+    owner: "{{ deploy_user }}"
+    group: "{{ deploy_group }}"

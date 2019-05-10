@@ -6,8 +6,8 @@
 - name: Create base directory
   file:
     path: "{{ base_dir }}"
-    owner: "{{ project_name }}"
-    group: staff
+    owner: "{{ deploy_user }}"
+    group: "{{ deploy_group }}"
     state: directory
 
 - name: Set permanent env variables
@@ -15,4 +15,4 @@
     dest: /etc/environment
     line: "{{ item }}"
   with_items:
-    - "DJANGO_SETTINGS_MODULE=gamesight.settings.production"
+    - "DJANGO_SETTINGS_MODULE={{ django_settings_module }}"

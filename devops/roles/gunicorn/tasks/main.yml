@@ -2,8 +2,8 @@
   become: yes
   file:
     state: directory
-    owner: "{{ project_name }}"
-    group: staff
+    owner: "{{ deploy_user }}"
+    group: "{{ deploy_group }}"
     recurse: yes
     path: "{{ gunicorn_logfile_path }}"
 
@@ -18,8 +18,8 @@
   become: yes
   file:
     state: directory
-    owner: "{{ project_name }}"
-    group: staff
+    owner: "{{ deploy_user }}"
+    group: "{{ deploy_group }}"
     recurse: yes
     path: "{{ gunicorn_logfile_path }}"
 

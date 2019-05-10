@@ -1,1 +1,1 @@
-django_settings_module: {{ project_name }}.settings.dev
+django_settings_module: "{{ project_name }}.settings.dev"

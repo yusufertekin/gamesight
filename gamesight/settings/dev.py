@@ -11,6 +11,4 @@ MIDDLEWARE += [
     'debug_toolbar.middleware.DebugToolbarMiddleware'
 ]
 
-STATICFILES_DIRS = (
-    os.path.join(PROJECT_DIR, 'static'),
-)
+STATIC_ROOT = os.path.join(PROJECT_DIR, 'static/')

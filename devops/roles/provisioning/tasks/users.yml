@@ -8,7 +8,7 @@
 - name: Add staff users
   user:
     name: "{{ item.name }}"
-    group: staff
+    group: "{{ deploy_group }}"
     createhome: yes
     state: "{{ item.state | default('present') }}"
     shell: "/bin/bash"
