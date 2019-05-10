@@ -35,20 +35,17 @@
       pip:
         requirements: "{{ project_home }}/requirements/base.txt" 
         virtualenv: "{{ app_venv_home }}"
-        virtualenv_python: "/usr/bin/python3"
 
-    - name: Install env python requirements
+    - name: Install dev python requirements
       pip:
         requirements: "{{ project_home }}/requirements/dev.txt" 
         virtualenv: "{{ app_venv_home }}"
-        virtualenv_python: "/usr/bin/python3"
       when: "'vagrant' in group_names"
 
-    - name: Install env python requirements
+    - name: Install production python requirements
       pip:
         requirements: "{{ project_home }}/requirements/production.txt" 
         virtualenv: "{{ app_venv_home }}"
-        virtualenv_python: "/usr/bin/python3"
       when: "'amazon' in group_names"
 
     - name: Copy over app.env file

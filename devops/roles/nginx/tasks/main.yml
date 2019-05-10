@@ -33,13 +33,13 @@
 - name: Nginx | Template out nginx configuration
   template:
     src: nginx.conf.j2
-    dest: "/etc/nginx/sites-available/default.conf"
+    dest: "/etc/nginx/sites-available/default"
 
 - name: Nginx | Enable sites
   file:
     state: link
-    src: "/etc/nginx/sites-available/default.conf"
-    dest: "/etc/nginx/sites-enabled/default.conf"
+    src: "/etc/nginx/sites-available/default"
+    dest: "/etc/nginx/sites-enabled/default"
 
 - name: Nginx | Restart service
   systemd:

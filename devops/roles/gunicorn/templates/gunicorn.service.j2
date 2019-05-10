@@ -3,8 +3,8 @@ Description=gunicorn daemon
 After=network.target
 
 [Service]
-User={{ project_name }}
-Group=staff
+User={{ deploy_user }}
+Group={{ deploy_group }}
 WorkingDirectory={{ project_home }}
 ExecStart={{ app_venv_home }}/bin/gunicorn {{ project_name }}.wsgi:application --bind {{ gunicorn_sock }} --access-logfile {{ gunicorn_access_logfile }} --error-logfile {{ gunicorn_error_logfile }} --log-level {{ gunicorn_log_level }}
 EnvironmentFile={{ project_home }}/app.env
