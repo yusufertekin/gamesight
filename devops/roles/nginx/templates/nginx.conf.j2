@@ -10,7 +10,7 @@ server {
 
     location /static/ {
         autoindex on;
-        alias   /home/{{ project_name }}/static/;
+        alias   {{ project_home }}/static/;
     }
 
     location / {
