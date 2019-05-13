@@ -24,31 +24,38 @@
       <input class="form-control" type="password" placeholder="Retype Password" name="password2">
     </div>
     <input type="hidden" name="next" value="{{ next }}">
-    <div style="display: flex; flex-direction: row;">
-      <div class="card mb-3" style="margin-right: 10px; min-width: 20rem;">
-        <div class="card-body">
-          <h5 class="card-title">{{ free_subscription_plan.name }}</h5>
-          <p class="card-text">{{ free_subscription_plan.description }}</p>
-          <p class="card-text">Num of project allowence {{ free_subscription_plan.num_project_allowence }}</p>
-          <p class="card-text">Num of saved report allowence {{ free_subscription_plan.num_saved_report_allowence }}</p>
-          <p class="card-text">Num of recurring credits {{ free_subscription_plan.recurring_credits }}</p>
-        </div>
-        <div class="card-footer bg-transparent">Price {{ free_subscription_plan.price }}</div>
-      </div>
+    <div class="card-deck mb-3 text-center">
       {% for subscription_plan in paid_subscription_plans %}
-      <div class="card mb-3" style="margin-right: 10px; min-width: 20rem;">
-        <div class="card-body">
-          <h5 class="card-title">{{ subscription_plan.name }}</h5>
-          <p class="card-text">{{ subscription_plan.description }}</p>
-          <p class="card-text">Num of project allowence {{ subscription_plan.num_project_allowence }}</p>
-          <p class="card-text">Num of saved report allowence {{ subscription_plan.num_saved_report_allowence }}</p>
-          <p class="card-text">Num of recurring credits {{ subscription_plan.recurring_credits }}</p>
+      <div class="card mb-4 box-shadow" style="min-width: 300px;">
+        <div class="card-header">
+          <h4 class="my-0 font-weight-normal">{{ subscription_plan.name }}</h4>
         </div>
-        <div class="card-footer bg-transparent">Price {{ subscription_plan.price }}</div>
+        <div class="card-body">
+          <h1 class="card-title pricing-card-title">${{ subscription_plan.price }} <small class="text-muted">/ mo</small></h1>
+          <ul class="list-unstyled mt-3 mb-4">
+            <li>{{ subscription_plan.num_project_allowence }} project allowence</li>
+            <li>{{ subscription_plan.num_saved_report_allowence }} report allowence</li>
+            <li>{{ subscription_plan.recurring_credits }} recurring credits</li>
+          </ul>
+          <button type="button" class="btn btn-lg btn-block btn-outline-primary">Contact Us</button>
+        </div>
       </div>
       {% endfor %}
+      <div class="card mb-4 box-shadow" style="min-width: 300px;">
+        <div class="card-header">
+          <h4 class="my-0 font-weight-normal">{{ free_subscription_plan.name }}</h4>
+        </div>
+        <div class="card-body">
+          <h1 class="card-title pricing-card-title">${{ free_subscription_plan.price }} <small class="text-muted">/ mo</small></h1>
+          <ul class="list-unstyled mt-3 mb-4">
+            <li>{{ free_subscription_plan.num_project_allowence }} project allowence</li>
+            <li>{{ free_subscription_plan.num_saved_report_allowence }} report allowence</li>
+            <li>{{ free_subscription_plan.recurring_credits }} recurring credits</li>
+          </ul>
+          <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Sign up for free</button>
+        </div>
+      </div>
     </div>
-    <input class="btn-primary" style="background-color: #f59e38;" type="submit" value="Register">
   </form>
 </div>
 {% endblock %}

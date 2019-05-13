@@ -23,7 +23,12 @@
         owner: "{{ deploy_user }}"
         group: "{{ deploy_group }}"
 
-    - name: Clone the code repository to the docroot.
+    - name: Remove repo
+      file:
+        state: absent
+        path: "{{ project_home }}"
+
+    - name: Clone the code repository to home.
       git:
         repo: "{{ git_repo }}"
         dest: "{{ project_home }}"

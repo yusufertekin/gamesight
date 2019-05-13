@@ -11,12 +11,41 @@
 </head>
 <body>
   <div id="app">
+    <nav id="app-header" class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" style="width: 85%" href="#">Gamesight</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Menu
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">{{ request.user.profile.credit }} Credits</a>
+              <a class="dropdown-item" href="#">{{ request.user }}</a>
+              <a class="dropdown-item" href="#">Help me!</a>
+              <a class="dropdown-item" href="#">Do I have to pay</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="">Bye Bye</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
     <div id="content">
-      User: {{ request.user }} 
-      <br/>
-      Credit: {{ request.user.profile.credit }}
-      <br/>
-      <a href="{% url "accounts:logout" %}">Log out</a>
+      <div style="display: flex; justify-content: center; align-items: center;">
+        <div style="display: flex; flex-direction: column;">
+          <button type="button" class="btn btn-primary btn-lg">Add game</button>
+          <br />
+          <div class="embed-responsive embed-responsive-4by3" style="width: 300px;">
+            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0"></iframe>
+          </div>
+          <p style="text-align: center;">Learn how to add a game</p>
+        </div>
+      </div>
       {% block content %}{% endblock %}
     </div>
   </div>
