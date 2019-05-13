@@ -20,7 +20,7 @@ class LoginView(TemplateView):
                 return self.render_to_response({'error_message': 'Please use correct email and password'})
             else:
                 login(request, user_cache)
-                return HttpResponseRedirect(reverse_lazy('site-home'))
+                return HttpResponseRedirect(reverse_lazy('home'))
                 
     
     def get(self, request, *args, **kwargs):
@@ -29,7 +29,7 @@ class LoginView(TemplateView):
             if next:
                 return HttpResponseRedirect(next)
             else:
-                return HttpResponseRedirect(reverse_lazy('site-home'))
+                return HttpResponseRedirect(reverse_lazy('home'))
 
         return self.render_to_response({'next': next})
 
@@ -58,7 +58,7 @@ class RegisterView(TemplateView):
             user = authenticate(email=email, password=password)
             login(request, user)
             user.profile.create_subscription(SubscriptionPlan.objects.first())
-            return HttpResponseRedirect(reverse_lazy('site-home'))
+            return HttpResponseRedirect(reverse_lazy('home'))
         else:
             return self.render_to_response(self.get_context_data(error_message='Please fill all required fields'))
 
