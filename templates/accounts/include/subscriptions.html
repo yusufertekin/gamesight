@@ -1,0 +1,16 @@
+{% for subscription_plan in paid_subscription_plans %}
+<div class="card mb-4 box-shadow" style="min-width: 300px;">
+  <div class="card-header">
+    <h4 class="my-0 font-weight-normal">{{ subscription_plan.name }}</h4>
+  </div>
+  <div class="card-body">
+    <h1 class="card-title pricing-card-title">${{ subscription_plan.price }} <small class="text-muted">/ mo</small></h1>
+    <ul class="list-unstyled mt-3 mb-4">
+      <li>{{ subscription_plan.num_project_allowence }} project allowence</li>
+      <li>{{ subscription_plan.num_saved_report_allowence }} report allowence</li>
+      <li>{{ subscription_plan.recurring_credits }} recurring credits</li>
+    </ul>
+    <button type="button" class="btn btn-lg btn-block btn-outline-primary">Contact Us</button>
+  </div>
+</div>
+{% endfor %}

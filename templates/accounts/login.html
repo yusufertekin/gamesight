@@ -1,6 +1,6 @@
 {% extends "unauthorized_base.html" %}
 {% load static %}
-{% block title %}Login Hosgeldin Damla{% endblock %}
+{% block title %}Login{% endblock %}
 {% block content %}
 {% if error_message %}
 <div class="alert alert-danger fade show" style="display: flex; flex-direction: row;" role="alert">
@@ -25,7 +25,7 @@
     <div class="form-group" style="width: 50%">
       <input class="form-control" type="password" placeholder="Password" name="password">
     </div>
-    <input class="btn-primary" style="background-color: #f59e38;" type="submit" value="Login">
+    <button class="btn btn-primary" type="submit">Login</button>
   </form>
   <a href="{% url "accounts:register" %}">Register</a>
 </div>

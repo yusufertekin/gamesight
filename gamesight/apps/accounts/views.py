@@ -63,6 +63,17 @@ class RegisterView(TemplateView):
             return self.render_to_response(self.get_context_data(error_message='Please fill all required fields'))
 
 
+class SubscriptionListView(TemplateView):
+    template_name = 'accounts/subscriptions.html'
+
+    def get_context_data(self, **kwargs):
+        context = {
+            'paid_subscription_plans': SubscriptionPlan.objects.filter(id__gt=1),
+        }
+        context.update(kwargs)
+        return context
+
+
 def logout_user(request, *args, **kwargs):
     logout(request)
     return HttpResponseRedirect(reverse_lazy('login'))

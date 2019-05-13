@@ -22,7 +22,7 @@ from gamesight.apps.accounts.views import LoginView
 
 urlpatterns = [
     url(r'^$', LoginView.as_view(), name='login'),
-    url(r'^app/', TemplateView.as_view(template_name='base.html'), name='site-home'),
+    url(r'^app/', TemplateView.as_view(template_name='home.html'), name='site-home'),
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/', include('gamesight.apps.accounts.urls', namespace='accounts')),
 ]
