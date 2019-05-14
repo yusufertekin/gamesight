@@ -25,6 +25,7 @@
     </div>
     <input type="hidden" name="next" value="{{ next }}">
     <div class="card-deck mb-3 text-center">
+      {% include "accounts/include/subscriptions.html" %}
       <div class="card mb-4 box-shadow" style="min-width: 300px;">
         <div class="card-header">
           <h4 class="my-0 font-weight-normal">{{ free_subscription_plan.name }}</h4>
